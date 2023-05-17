@@ -41,7 +41,7 @@ figure_1_2(str('fig1'), str('Fig.1 - Temperatur im Zentrum der Probe'), pic_a2, 
           df['flowtime'], df['temp_center'],str('Eintauchen der Probe'),
            df2['flowtime'], df2['temp_center'],str('Eingetauchte der Probe'))
 
-figure_1_2(str('fig2'), str('Fig.2 - Temperatur der Termolemente'), pic_a2, pic_b2,
+figure_1_2(str('fig2'), str('Fig.2 - Temperatur der Thermolemente'), pic_a2, pic_b2,
           str('Zeit [s]'), str('Temperatur[K]'),
           df3['flowtime'], df3['temp_TEL1'],str('Eintauchen der Probe'),
            df4['flowtime'], df4['temp_TEL1'],str('Eingetauchte der Probe'))
