@@ -1,58 +1,47 @@
 # Auswertungstool - Basis
+# Version: 2.0.0
 #
-#
-# Status 05.01.2023
+# Status 17.05.2023
 
 # Import
 
-import statistics
-import matplotlib.dates as mdates
-from numpy import exp
-import math
-import numpy
-import pandas
-from IPython.display import display
-import matplotlib.pyplot as plt
-from matplotlib import lines
-import numpy as np
-from datetime import datetime
-import pandas as pd
-import plotly.figure_factory as ff
-from scipy.optimize import curve_fit
-import matplotlib.colors
+from functions_import import *
 
-# Figure 1
+## Darstellung Grafik
 
-index=['Zufallspunkte']
-validation ={'x':[1,2,3,4,5,6],
-             'y':[1,2,3,4,5,6]}
+pic_a = 10
+pic_b = 9
+pic_a2 = 8
+pic_b2 = 5
 
-df_val=pd.DataFrame(validation)
-print(df_val)
-print(df_val['x'])
+## Import
 
-fig_name = input("Name of figure (e.g. furnace):")
+name = str('temp_center')
+att = str('-rfile.out')
+att2 = str('-rfile_2.out')
+df = pd.read_csv(name+att,delimiter=' ',  skiprows=2)
+df.columns = ['timestep', 'temp_center', 'flowtime', 'def']
+print(df)
+df2 = pd.read_csv(name+att2,delimiter=' ',  skiprows=2)
+df2.columns = ['timestep', 'temp_center', 'flowtime', 'def']
+print(df2)
 
-# Hex Codes VOEST:  #0082B4     #50AACD     #91C8DC     #C8E1F0     - Blau
-#                   #A5A5A5     #C4C4C4     #E3E3E3                 - Grau
-#                   #87D25A     #D7E6B4                             - Grün
-#                   #E1D22D     #FAF2B1                             - Gelb
+name = str('temperatur_thermolelemente')
+att = str('-rfile.out')
+att2 = str('-rfile_2.out')
+df3 = pd.read_csv(name+att,delimiter=' ',  skiprows=2)
+df3.columns = ['timestep', 'temp_TEL1', 'temp_TEL2', 'flowtime', 'def']
+print(df3)
+df4 = pd.read_csv(name+att2,delimiter=' ',  skiprows=2)
+df4.columns = ['timestep', 'temp_TEL1', 'temp_TEL2', 'flowtime', 'def']
+print(df4)
 
-fig, (ax1,ax2) = plt.subplots(2, figsize=(16, 9))
-cmap = plt.get_cmap('Blues')
-ax1.plot(df_val['x'],df_val['y'], color='#0082B4',linestyle='-.',marker="o", markersize=10,  markeredgecolor='k',label='Daten')
-ax1.set_title("Fig.1 - " + str(fig_name))
-ax1.legend(loc='upper left')
-ax1.grid(True)
-ax1.set_xlabel('x-Achse')
-ax1.set_ylabel('y-Achse')
-ax1.grid()
-ax1.text(0.6, 0.1, 'Text ', horizontalalignment='left', verticalalignment='center', transform=ax1.transAxes, fontsize=10,bbox=dict(facecolor='white', edgecolor='black', boxstyle='round'))
-ax2.plot(df_val['x'],df_val['y']*2, color=cmap(0.5), label='Daten 2')
-ax2.legend(loc='upper left')
-ax2.grid(True)
-ax2.set_xlabel('x-Achse')
-ax2.set_ylabel('y-Achse')
-ax2.grid()
+figure_1_2(str('fig1'), str('Fig.1 - Temperatur im Zentrum der Probe'), pic_a2, pic_b2,
+          str('Zeit [s]'), str('Temperatur[K]'),
+          df['flowtime'], df['temp_center'],str('Eintauchen der Probe'),
+           df2['flowtime'], df2['temp_center'],str('Eingetauchte der Probe'))
 
-plt.savefig(str(fig_name) + '_figure1.png')
+figure_1_2(str('fig2'), str('Fig.2 - Temperatur der Termolemente'), pic_a2, pic_b2,
+          str('Zeit [s]'), str('Temperatur[K]'),
+          df3['flowtime'], df3['temp_TEL1'],str('Eintauchen der Probe'),
+           df4['flowtime'], df4['temp_TEL1'],str('Eingetauchte der Probe'))
